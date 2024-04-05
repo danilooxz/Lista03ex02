@@ -2,45 +2,76 @@ package br.cesul;
 
 public class Election {
 
-    public double candidateA;
+        private int votosCandidatoA;
+        private int votosCandidatoB;
+        private int votosBrancos;
+        private int votosNulos;
 
-    public double candidateB;
-
-    public double voteWhite;
-
-    public double voteNull;
-
-
-    public Election(double candidateA, double candidateB, double voteWhite, double voteNull) {
-        this.candidateA = candidateA;
-        this.candidateB = candidateB;
-        this.voteWhite = voteWhite;
-        this.voteNull = voteNull;
-    }
+        public Election() {
+            this.votosCandidatoA = 0;
+            this.votosCandidatoB = 0;
+            this.votosBrancos = 0;
+            this.votosNulos = 0;
+        }
 
 
-    double totalValidVotes = candidateA + candidateB;
-    double totalVotes = totalValidVotes + voteWhite + voteNull;
+        public void votarCandidatoA() {
+            this.votosCandidatoA++;
+        }
+
+        public void votarCandidatoB() {
+            this.votosCandidatoB++;
+        }
 
 
-    public String checkResult () {
-        if (totalVotes == 0);
-        return "Não houve votos registrados";
-    }
+        public void votarBranco() {
+            this.votosBrancos++;
+        }
 
-    public double getCandidateA() {
-        return candidateA;
-    }
 
-    public double getCandidateB() {
-        return candidateB;
-    }
+        public void votarNulo() {
+            this.votosNulos++;
+        }
 
-    public double getVoteWhite() {
-        return voteWhite;
-    }
+        public String apurarResultado() {
+            int totalVotosValidos = votosCandidatoA + votosCandidatoB;
+            int totalVotos = totalVotosValidos + votosBrancos + votosNulos;
 
-    public double getVoteNull() {
-        return voteNull;
-    }
+            if (totalVotos == 0) {
+                return "Não houve votos registrados.";
+            }
+
+            double percentualVotosBrancos = (double) votosBrancos / totalVotos;
+            double percentualVotosNulos = (double) votosNulos / totalVotos;
+            double percentualVotosCandidatoA = (double) votosCandidatoA / totalVotos;
+            double percentualVotosCandidatoB = (double) votosCandidatoB / totalVotos;
+
+            if (percentualVotosCandidatoA < 0.5 && percentualVotosCandidatoB < 0.5) {
+                return "Segundo Turno";
+            }
+
+            if (percentualVotosCandidatoA > percentualVotosCandidatoB) {
+                return "Candidato A";
+            } else if (percentualVotosCandidatoB > percentualVotosCandidatoA) {
+                return "Candidato B";
+            } else {
+                return "Empate";
+            }
+        }
+
+        public int getVotosCandidatoA() {
+            return votosCandidatoA;
+        }
+
+        public int getVotosCandidatoB() {
+            return votosCandidatoB;
+        }
+
+        public int getVotosBrancos() {
+            return votosBrancos;
+        }
+
+        public int getVotosNulos() {
+            return votosNulos;
+        }
 }
